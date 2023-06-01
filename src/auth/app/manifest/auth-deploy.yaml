@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: auth
-  lable:
+  lables:
     app: auth
 spec:
   replicas: 2
