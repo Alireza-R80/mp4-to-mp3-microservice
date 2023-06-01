@@ -1,0 +1,19 @@
+.tox/
+.venv/
+venv/
+dist/
+build/
+*.egg-info
+.coverage
+.github/
+coverage.xml
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.mypy_cache
+.pytest_cache
+
+# kubernetes
+manifest/
