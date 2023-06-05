@@ -14,7 +14,7 @@ def upload(file, fs, channle, access):
             detail="Internal server error",
         )
 
-    message = {"video_id": str(fid), "mp3_id": None, "user_id": access["id"]}
+    message = {"video_id": str(fid), "mp3_id": None, "user_email": access["email"]}
 
     try:
         channle.basic_publish(
