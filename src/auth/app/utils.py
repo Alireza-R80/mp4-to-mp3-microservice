@@ -7,9 +7,10 @@ from models import User
 from sqlalchemy.orm import Session
 
 
-def create_token(id, admin):
+def create_token(id, email, admin):
     payload = {
         "id": id,
+        "email": email,
         "exp": datetime.datetime.now() + datetime.timedelta(days=1),
         "iat": datetime.datetime.now(),
         "admin": admin,
