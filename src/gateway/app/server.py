@@ -2,8 +2,10 @@ import gridfs
 import pika
 from auth.validate import token as validate_token
 from auth_svc import access, registery
+from bson.objectid import ObjectId
 from database import mp3s_db, videos_db
-from fastapi import Depends, FastAPI, UploadFile, status
+from fastapi import Depends, FastAPI, HTTPException, UploadFile, status
+from fastapi.responses import FileResponse
 from schemas import User
 from storage import utils
 
@@ -39,3 +41,19 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(server, host="0.0.0.0", port=9000)
+
+
+@server.get("/download")
+def download(fid: str, access: dict = Depends(validate_token)):
+    try:
+        out = fs_mp3s.get(ObjectId(fid))
+
+        with open(f"{fid}.mp3", "wb") as f:
+            f.write(out.read())
+
+        return FileResponse(f"{fid}.mp3", filename=f"{fid}.mp3")
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="internal server error",
+        )
